@@ -10,7 +10,6 @@ const getRandomColor = () => {
   return `#${color}`;
 }
 
-
 // function shuffles an array using fisher-yates algorithm
 const shuffleAnswer = array => {
   for (let i = array.length - 1; i > 0; i--) {
@@ -27,6 +26,7 @@ function App() {
   const [color, setColor] = useState('');
   const [answer, setAnswer] = useState([]);
   const [isWrongSelection, setWrongSelection] = useState(undefined);
+  const [correctCount, setCorrectCount] = useState(0);
 
   const generateColor = () => {
     const currentColor = getRandomColor();
@@ -41,9 +41,11 @@ function App() {
   const handleAnswerClicked = (answer) => {
     if (answer == color) {
       setWrongSelection(false);
+      setCorrectCount(correctCount + 1);
       generateColor();
     } else {
       setWrongSelection(true);
+      setCorrectCount(0);
     }
   }
 
@@ -61,7 +63,9 @@ function App() {
            {isWrongSelection == true && 'Incorrect. Try Again!'}
            {isWrongSelection == false && 'Correct!'}
         </div>
-       
+        <div className="correct-count">
+          Points: {correctCount}
+        </div>
       </div>
     </div>
   );
